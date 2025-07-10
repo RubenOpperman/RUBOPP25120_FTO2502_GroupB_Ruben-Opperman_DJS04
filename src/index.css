@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@theme {
+  --color-Moonstone: #5eb1bf;
+  --color-dark-green: #042a2b;
+  --color-white: #fff;
+  --color-plat: #e8e8e8;
+
+  --color-Background: #1f2937;
+  --color-Podcast-card: #f9fafb;
+  --color-Font-primary-color: #1f2937;
+
+  --color-NavBar-bg: #111827;
+  --color-secondary-font-color: #686868;
+}
