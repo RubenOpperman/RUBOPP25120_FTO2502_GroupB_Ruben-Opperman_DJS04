@@ -1,5 +1,4 @@
 import { useState } from "react";
-import React from "react";
 
 /**
  * Navigation bar component for the Podcast Explorer app.
@@ -21,13 +20,13 @@ export default function Navbar({ onChange }) {
 
   return (
     <>
-      <nav className="w-full h-20 bg-NavBar-bg text-Podcast-card flex items-center  font-serif">
+      <nav className="w-full h-[10wh] bg-NavBar-bg text-Podcast-card flex items-center  font-serif flex-wrap">
         <div>
           <img src="../src/assets/apple-podcast.svg" alt="podcast icon" />
         </div>
         <div className="text-2xl p-5 font-bold">PodcastAPP</div>
 
-        <div className="ml-auto px-10 cursor-pointer flex gap-5">
+        <div className="ml-auto px-10 cursor-pointer flex gap-5 sm:mb-0 mb-4   ">
           <div
             className={`border-2 border-white rounded-2xl py-1 px-2 ${
               !searchBar ? "hidden" : null

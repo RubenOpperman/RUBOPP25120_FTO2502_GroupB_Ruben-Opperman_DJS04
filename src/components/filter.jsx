@@ -12,15 +12,17 @@ export default function Filter({ genreFilter, sort }) {
   };
 
   return (
-    <div className="flex p-5 gap-5 bg-Background font-serif">
-      <h3 className=" text-white text-xl py-2 px-4 rounded-2xl">Filter by:</h3>
+    <div className="flex flex-wrap p-5 gap-5 bg-Background font-serif ">
+      <h3 className=" text-white text-lg md:text-xl py-2 px-4 rounded-2xl">
+        Filter by:
+      </h3>
       <form
         onSubmit={(event) => event.preventDefault()}
-        className="border-2 bg-white py-2 px-4 rounded-2xl"
+        className="border-2 flex wrap bg-white py-2 px-4 rounded-2xl"
       >
-        <label htmlFor="genre"></label>
+        <label htmlFor="genre">Genres</label>
         <select onChange={handleGenrePicked} name="genre" id="genre">
-          <option value="">GENRE</option>
+          <option value=""></option>
           <option value="Personal Growth">Personal Growth</option>
           <option value="Investigative Journalism">
             Investigative Journalism
@@ -38,9 +40,9 @@ export default function Filter({ genreFilter, sort }) {
         onSubmit={(event) => event.preventDefault()}
         className="border-2 bg-white py-2 px-4 rounded-2xl"
       >
-        <label htmlFor="SORT"></label>
+        <label htmlFor="SORT">SORT</label>
         <select onChange={handleSortPicked} name="sort" id="sort">
-          <option value="sort">SORT</option>
+          <option value="sort"></option>
           <option value="A-Z">A-Z</option>
           <option value="Z-A">Z-A</option>
           <option value="Newest">newest</option>

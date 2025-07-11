@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 
 import Navbar from "./components/header";
 import Filter from "./components/filter";
