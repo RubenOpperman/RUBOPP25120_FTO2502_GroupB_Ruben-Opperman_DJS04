@@ -4,7 +4,6 @@ import Navbar from "./components/header";
 import Filter from "./components/filter";
 import MainContent from "./components/mainContent";
 import { genres } from "./data/genreData";
-
 import { fetchPodcastData } from "./data/podcastData";
 import GetGenreIds from "./utils/getGenreIds";
 import "./App.css";
@@ -24,12 +23,17 @@ function App() {
 
   const [search, setSearch] = useState("");
   const [genre, setGenre] = useState("");
+  const [sort, setSort] = useState("");
 
   const handleNavChange = (data) => {
     setSearch(data);
   };
   const handleGenreFilter = (data) => {
     setGenre(data);
+  };
+
+  const handleAsc = (data) => {
+    setSort(data);
   };
 
   useEffect(() => {
@@ -48,13 +52,24 @@ function App() {
 
   const podcasts = podcastData
     .filter((podcast) => {
+      const genreList = GetGenreIds(podcast.genres, genres);
       const matchesSearch = podcast.title
         .toLowerCase()
         .includes(search.toLowerCase());
-      const genreList = GetGenreIds(podcast.genres, genres);
       const matchesGenre = genre === "" || genreList.includes(genre);
 
       return (search === "" || matchesSearch) && matchesGenre;
+    })
+    .sort((a, b) => {
+      if (sort === "A-Z") {
+        return a.title.localeCompare(b.title);
+      } else if (sort === "Z-A") {
+        return b.title.localeCompare(a.title);
+      } else if (sort === "Newest") {
+        return new Date(b.updated) - new Date(a.updated);
+      } else {
+        return 0;
+      }
     })
     .map((podcast) => (
       <MainContent
@@ -72,7 +87,7 @@ function App() {
   return (
     <>
       <Navbar onChange={handleNavChange} />
-      <Filter genreFilter={handleGenreFilter} />
+      <Filter sort={handleAsc} genreFilter={handleGenreFilter} />
 
       {isLoading ? (
         <div className="fixed inset-0 flex justify-center items-center bg-white z-50">

@@ -1,9 +1,14 @@
-export default function Filter({ genreFilter }) {
-  const handelGenrePicked = () => {
+export default function Filter({ genreFilter, sort }) {
+  const handleGenrePicked = () => {
     const selectGenreElement = document.getElementById("genre");
     const selectGenreValue = selectGenreElement.value;
     genreFilter(selectGenreValue);
-    console.log(selectGenreValue);
+  };
+
+  let handleSortPicked = () => {
+    const selectAlphabetElement = document.getElementById("sort");
+    const selectSortValue = selectAlphabetElement.value;
+    sort(selectSortValue);
   };
 
   return (
@@ -11,8 +16,8 @@ export default function Filter({ genreFilter }) {
       <h3 className=" text-white text-xl py-2 px-4 rounded-2xl">Filter by:</h3>
       <form className="border-2 bg-white py-2 px-4 rounded-2xl">
         <label htmlFor="genre"></label>
-        <select onChange={handelGenrePicked} name="genre" id="genre">
-          <option value="GENRE">GENRE</option>
+        <select onChange={handleGenrePicked} name="genre" id="genre">
+          <option value="">GENRE</option>
           <option value="Personal Growth">Personal Growth</option>
           <option value="Investigative Journalism">
             Investigative Journalism
@@ -28,11 +33,11 @@ export default function Filter({ genreFilter }) {
       </form>
       <form className="border-2 bg-white py-2 px-4 rounded-2xl">
         <label htmlFor="SORT"></label>
-        <select name="sort" id="sort">
+        <select onChange={handleSortPicked} name="sort" id="sort">
           <option value="sort">SORT</option>
           <option value="A-Z">A-Z</option>
           <option value="Z-A">Z-A</option>
-          <option value="newest">newest</option>
+          <option value="Newest">newest</option>
         </select>
       </form>
     </div>
