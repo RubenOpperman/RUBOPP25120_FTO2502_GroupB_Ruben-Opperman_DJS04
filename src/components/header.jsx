@@ -33,7 +33,11 @@ export default function Navbar({ onChange }) {
               !searchBar ? "hidden" : null
             }  `}
           >
-            <form>
+            <form
+              onSubmit={(event) => {
+                event.preventDefault();
+              }}
+            >
               <input
                 onChange={handleInputChange}
                 id="search"

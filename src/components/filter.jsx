@@ -14,7 +14,10 @@ export default function Filter({ genreFilter, sort }) {
   return (
     <div className="flex p-5 gap-5 bg-Background font-serif">
       <h3 className=" text-white text-xl py-2 px-4 rounded-2xl">Filter by:</h3>
-      <form className="border-2 bg-white py-2 px-4 rounded-2xl">
+      <form
+        onSubmit={(event) => event.preventDefault()}
+        className="border-2 bg-white py-2 px-4 rounded-2xl"
+      >
         <label htmlFor="genre"></label>
         <select onChange={handleGenrePicked} name="genre" id="genre">
           <option value="">GENRE</option>
@@ -31,7 +34,10 @@ export default function Filter({ genreFilter, sort }) {
           <option value="Kids and Family">Kids and Family</option>
         </select>
       </form>
-      <form className="border-2 bg-white py-2 px-4 rounded-2xl">
+      <form
+        onSubmit={(event) => event.preventDefault()}
+        className="border-2 bg-white py-2 px-4 rounded-2xl"
+      >
         <label htmlFor="SORT"></label>
         <select onChange={handleSortPicked} name="sort" id="sort">
           <option value="sort">SORT</option>
