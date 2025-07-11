@@ -25,5 +25,17 @@
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.2.0",
     "vite": "^7.0.0"
-  }
+  },
+  "description": "A responsive React web application that fetches and displays podcast data using Vanilla JavaScript, TailwindCSS, and HTML. The app includes a loading screen while fetching data from the API, ensuring a smooth user experience.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RubenOpperman/RUBOPP25120_FTO2502_GroupB_Ruben-Opperman_DJS04.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RubenOpperman/RUBOPP25120_FTO2502_GroupB_Ruben-Opperman_DJS04/issues"
+  },
+  "homepage": "https://github.com/RubenOpperman/RUBOPP25120_FTO2502_GroupB_Ruben-Opperman_DJS04#readme"
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import Navbar from "./components/header";
 import MainContent from "./components/mainContent";
@@ -20,6 +20,12 @@ function App() {
   const [podcastData, setPodcastData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [search, setSearch] = useState("");
+
+  const handleNavChange = (data) => {
+    setSearch(data);
+  };
+
   useEffect(() => {
     /**
      * Fetches podcast data asynchronously and updates state.
@@ -34,22 +40,28 @@ function App() {
     getData();
   }, []);
 
-  const podcasts = podcastData.map((podcast) => (
-    <MainContent
-      key={podcast.id}
-      id={podcast.id}
-      title={podcast.title}
-      description={podcast.description}
-      seasons={podcast.seasons}
-      img={podcast.image}
-      updated={podcast.updated}
-      genres={podcast.genres}
-    />
-  ));
+  const podcasts = podcastData
+    .filter((podcast) => {
+      return search.toLowerCase() === ""
+        ? podcast
+        : podcast.title.toLowerCase().includes(search);
+    })
+    .map((podcast) => (
+      <MainContent
+        key={podcast.id}
+        id={podcast.id}
+        title={podcast.title}
+        description={podcast.description}
+        seasons={podcast.seasons}
+        img={podcast.image}
+        updated={podcast.updated}
+        genres={podcast.genres}
+      />
+    ));
 
   return (
     <>
-      <Navbar />
+      <Navbar onChange={handleNavChange} />
 
       {isLoading ? (
         <div className="fixed inset-0 flex justify-center items-center bg-white z-50">
