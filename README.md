@@ -57,6 +57,7 @@ PODCAST-LANDING-PAGE
 │   │   ├── genres.jsx
 │   │   ├── header.jsx
 │   │   └── mainContent.jsx
+|   |   ├──pageNav.jsx
 │   ├── data/
 │   │   ├── genreData.js
 │   │   └── podcastData.js

@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/header";
 import Filter from "./components/filter";
 import MainContent from "./components/mainContent";
+import PageNav from "./components/PageNav";
+
 import { genres } from "./data/genreData";
 import { fetchPodcastData } from "./data/podcastData";
 import GetGenreIds from "./utils/getGenreIds";
@@ -23,14 +25,19 @@ import "./App.css";
 function App() {
   /** @type {[Object[], Function]} Podcast data state */
   const [podcastData, setPodcastData] = useState([]);
+
   /** @type {[boolean, Function]} Loading state */
   const [isLoading, setIsLoading] = useState(true);
+
   /** @type {[string, Function]} Search input state */
   const [search, setSearch] = useState("");
+
   /** @type {[string, Function]} Genre filter state */
   const [genre, setGenre] = useState("");
+
   /** @type {[string, Function]} Sort option state */
   const [sort, setSort] = useState("");
+
   /** @type {[number, Function]} Current pagination page */
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -50,6 +57,7 @@ function App() {
    */
   const handleGenreFilter = (data) => {
     setGenre(data);
+    setCurrentPage(1);
   };
 
   /**
@@ -58,7 +66,12 @@ function App() {
    */
   const handleAsc = (data) => {
     setSort(data);
+    setCurrentPage(1);
   };
+
+  const prevBtn = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+  const nextBtn = () =>
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
   useEffect(() => {
     /**
@@ -97,6 +110,7 @@ function App() {
 
   /** @type {number} Index of the first item on the current page */
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
   /** @type {Object[]} Current page's podcast items */
   const currentItems = filteredAndSorted.slice(
     indexOfFirstItem,
@@ -132,27 +146,13 @@ function App() {
           ))}
         </div>
       )}
-      <div className="flex justify-center gap-4 py-4 bg-NavBar-bg">
-        <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-          className="px-4 py-2 bg-white rounded disabled:opacity-50"
-        >
-          Previous
-        </button>
-        <span className="text-white">
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
-          disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-white  rounded disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
+
+      <PageNav
+        currentPage={currentPage}
+        totalPages={totalPages}
+        prevBtn={prevBtn}
+        nextBtn={nextBtn}
+      />
     </>
   );
 }
