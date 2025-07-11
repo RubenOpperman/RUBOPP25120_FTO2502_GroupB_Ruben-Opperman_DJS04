@@ -11,38 +11,58 @@ import "./App.css";
 /**
  * Main application component for the Podcast Explorer.
  *
- * - Fetches podcast data on initial render.
- * - Displays a loading screen while fetching data.
- * - Renders the navigation bar and a grid of podcast cards.
+ * Responsibilities:
+ * - Fetch podcast data on mount
+ * - Handle search, genre filtering, sorting
+ * - Manage pagination
+ * - Display podcast cards and loading state
  *
- * @returns {JSX.Element} The rendered application UI.
+ * @component
+ * @returns {JSX.Element} The rendered application
  */
 function App() {
+  /** @type {[Object[], Function]} Podcast data state */
   const [podcastData, setPodcastData] = useState([]);
+  /** @type {[boolean, Function]} Loading state */
   const [isLoading, setIsLoading] = useState(true);
-
+  /** @type {[string, Function]} Search input state */
   const [search, setSearch] = useState("");
+  /** @type {[string, Function]} Genre filter state */
   const [genre, setGenre] = useState("");
+  /** @type {[string, Function]} Sort option state */
   const [sort, setSort] = useState("");
-
+  /** @type {[number, Function]} Current pagination page */
   const [currentPage, setCurrentPage] = useState(1);
+
+  /** @constant {number} Items shown per page */
   const itemsPerPage = 8;
 
+  /**
+   * Handles changes from the Navbar search input
+   * @param {string} data - New search term
+   */
   const handleNavChange = (data) => {
     setSearch(data);
   };
+  /**
+   * Handles genre filter selection
+   * @param {string} data - Selected genre ID
+   */
   const handleGenreFilter = (data) => {
     setGenre(data);
   };
 
+  /**
+   * Handles sort option selection
+   * @param {string} data - Sort option ("A-Z", "Z-A", "Newest")
+   */
   const handleAsc = (data) => {
     setSort(data);
   };
 
   useEffect(() => {
     /**
-     * Fetches podcast data asynchronously and updates state.
-     * Shows loading screen while data is being fetched.
+     * Fetch podcast data on component mount
      */
     async function getData() {
       setIsLoading(true);
@@ -52,7 +72,10 @@ function App() {
     }
     getData();
   }, []);
-
+  /**
+   * Filter and sort the podcast data
+   * @returns {Object[]} Filtered and sorted podcast list
+   */
   const filteredAndSorted = podcastData
     .filter((podcast) => {
       const genreList = GetGenreIds(podcast.genres, genres);
@@ -69,29 +92,18 @@ function App() {
       if (sort === "Newest") return new Date(b.updated) - new Date(a.updated);
       return 0;
     });
-
+  /** @type {number} Index of the last item on the current page */
   const indexOfLastItem = currentPage * itemsPerPage;
+
+  /** @type {number} Index of the first item on the current page */
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  /** @type {Object[]} Current page's podcast items */
   const currentItems = filteredAndSorted.slice(
     indexOfFirstItem,
     indexOfLastItem
   );
+  /** @type {number} Total number of pages */
   const totalPages = Math.ceil(filteredAndSorted.length / itemsPerPage);
-
-  {
-    currentItems.map((podcast) => (
-      <MainContent
-        key={podcast.id}
-        id={podcast.id}
-        title={podcast.title}
-        description={podcast.description}
-        seasons={podcast.seasons}
-        img={podcast.image}
-        updated={podcast.updated}
-        genres={podcast.genres}
-      />
-    ));
-  }
 
   return (
     <>
