@@ -1,10 +1,12 @@
 import { useEffect, useState, useContext } from "react";
 
 import Navbar from "./components/header";
+import Filter from "./components/filter";
 import MainContent from "./components/mainContent";
+import { genres } from "./data/genreData";
 
 import { fetchPodcastData } from "./data/podcastData";
-
+import GetGenreIds from "./utils/getGenreIds";
 import "./App.css";
 
 /**
@@ -21,9 +23,13 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [search, setSearch] = useState("");
+  const [genre, setGenre] = useState("");
 
   const handleNavChange = (data) => {
     setSearch(data);
+  };
+  const handleGenreFilter = (data) => {
+    setGenre(data);
   };
 
   useEffect(() => {
@@ -42,9 +48,13 @@ function App() {
 
   const podcasts = podcastData
     .filter((podcast) => {
-      return search.toLowerCase() === ""
-        ? podcast
-        : podcast.title.toLowerCase().includes(search);
+      const matchesSearch = podcast.title
+        .toLowerCase()
+        .includes(search.toLowerCase());
+      const genreList = GetGenreIds(podcast.genres, genres);
+      const matchesGenre = genre === "" || genreList.includes(genre);
+
+      return (search === "" || matchesSearch) && matchesGenre;
     })
     .map((podcast) => (
       <MainContent
@@ -62,6 +72,7 @@ function App() {
   return (
     <>
       <Navbar onChange={handleNavChange} />
+      <Filter genreFilter={handleGenreFilter} />
 
       {isLoading ? (
         <div className="fixed inset-0 flex justify-center items-center bg-white z-50">
