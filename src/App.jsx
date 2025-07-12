@@ -95,8 +95,7 @@ function App() {
       const matchesSearch = podcast.title
         .toLowerCase()
         .includes(search.toLowerCase());
-      const matchesGenre =
-        genre === "" || genre === "GENRE" || genreList.includes(genre);
+      const matchesGenre = genre === "" || genreList.includes(genre);
       return (search === "" || matchesSearch) && matchesGenre;
     })
     .sort((a, b) => {
@@ -105,6 +104,7 @@ function App() {
       if (sort === "Newest") return new Date(b.updated) - new Date(a.updated);
       return 0;
     });
+
   /** @type {number} Index of the last item on the current page */
   const indexOfLastItem = currentPage * itemsPerPage;
 
